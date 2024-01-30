@@ -2,15 +2,13 @@ class Solution:
     def isValid(self, s: str) -> bool:
         symbols = ["dummy"]
         mapping = {")": "(", "]": "[", "}": "{"}
-
-        for i_s in s:
-            if i_s == "(" or i_s == "[" or i_s == "{":
-                symbols.append(i_s)
+        for i_char in s:
+            if i_char == "(" or i_char == "[" or i_char == "{":
+                symbols.append(i_char)
             else:
-                temp = symbols.pop()
-                if temp == "dummy":
+                close_symbol = symbols.pop()
+                if close_symbol == "dummy":
                     return False
-                elif temp != mapping[i_s]:
+                elif close_symbol != mapping[i_char]:
                     return False
-
         return symbols[-1] == "dummy"
