@@ -11,4 +11,6 @@ class Solution:
             if i_char != mapping[stack[-1]]:
                 return False
             stack.pop()
+        if stack:
+            return False
         return True
