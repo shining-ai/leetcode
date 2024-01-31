@@ -10,3 +10,7 @@ https://1kohei1.com/leetcode/
   
 ### Level_2.py（レビュー対象）
 * リファクタリングした最終版のコード
+
+
+## 解答の参考
+* https://github.com/Mike0121/LeetCode/tree/main/Arai60
