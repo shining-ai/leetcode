@@ -36,7 +36,7 @@ class Solution:
 
         def partition(left, right, pivot) -> int:
             pivot_frequency = counts[pivot][1]
-            counts[pivot], counts[right] = (counts[right], counts[pivot])
+            counts[pivot], counts[right] = counts[right], counts[pivot]
             sorted_i = left
             for i in range(left, right):
                 if counts[i][1] < pivot_frequency:
