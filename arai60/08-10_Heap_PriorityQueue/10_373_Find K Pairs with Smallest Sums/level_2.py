@@ -26,7 +26,7 @@ class Solution:
         return pairs
 
 
-# 重複チェックなしでheapに追加する
+# 重複なしでheapに追加する
 # あまり直感的ではない
 class Solution:
     def kSmallestPairs(
