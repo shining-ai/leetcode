@@ -6,6 +6,7 @@ class Solution:
             for j in range(i + 1, len(nums)):
                 if target == nums[i] + nums[j]:
                     return [i, j]
+        return []
 
 
 # hash mapを使って判定
@@ -22,6 +23,7 @@ class Solution:
             if number_to_index[difference] == i:
                 continue
             return [i, number_to_index[difference]]
+        return []
 
 
 # One-pass Hash Table
@@ -33,6 +35,7 @@ class Solution:
             if num in number_to_index:
                 return [number_to_index[num], i]
             number_to_index[target - num] = i
+        return []
 
 
 # ソートして頭と尾から探索
