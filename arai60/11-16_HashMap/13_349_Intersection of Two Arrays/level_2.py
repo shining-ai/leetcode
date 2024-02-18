@@ -32,8 +32,12 @@ class Solution:
             if nums1_sorted[i] > nums2_sorted[j]:
                 j += 1
                 continue
-            if nums1_sorted[i] not in intersection:
-                intersection.append(nums1_sorted[i])
-            i += 1
-            j += 1
+            assert nums1_sorted[i] == nums2_sorted[j]
+            # nums1とnums2の等しい要素に対する処理
+            latest_intersection = nums1_sorted[i]
+            intersection.append(latest_intersection)
+            while i < len(nums1) and nums1_sorted[i] == latest_intersection:
+                i += 1
+            while j < len(nums2) and nums2_sorted[j] == latest_intersection:
+                j += 1
         return intersection
