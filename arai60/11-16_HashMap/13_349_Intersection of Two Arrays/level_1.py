@@ -1,4 +1,4 @@
-# 何も見ずに解いた解放
+# 何も見ずに解いた解法
 class Solution:
     def intersection(self, nums1: List[int], nums2: List[int]) -> List[int]:
         nums1_set = set(nums1)
