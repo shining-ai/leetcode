@@ -33,10 +33,10 @@ class Solution:
 # 正規表現で実装
 class Solution:
     def numUniqueEmails(self, emails: List[str]) -> int:
-        receive_mails = set()
+        unique_mails = set()
         for email in emails:
             regex = re.match(r"^([\w\.]+)\+?.*@(.+)", email)
             local_name = regex.group(1).replace(".", "")
             domain = regex.group(2)
-            receive_mails.add(f"{local_name}@{domain}")
-        return len(receive_mails)
+            unique_mails.add(f"{local_name}@{domain}")
+        return len(unique_mails)
