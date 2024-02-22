@@ -2,18 +2,18 @@
 # "@"が2つ以上ある場合に対応するため、rsplitを使用
 class Solution:
     def numUniqueEmails(self, emails: List[str]) -> int:
-        receive_emails = set()
+        unique_emails = set()
         for email in emails:
             local_part, domain = email.rsplit("@", maxsplit=1)
             owner = local_part.split("+")[0].replace(".", "")
-            receive_emails.add(owner + "@" + domain)
-        return len(receive_emails)
+            unique_emails.add(f"{owner}@{domain}")
+        return len(unique_emails)
 
 
 # ドメインは末尾から検索する形に修正
 class Solution:
     def numUniqueEmails(self, emails: List[str]) -> int:
-        receive_emails = set()
+        unique_emails = set()
         for email in emails:
             i = len(email) - 1
             while i > 0 and email[i] != "@":
@@ -26,8 +26,8 @@ class Solution:
                 if c == "+":
                     break
                 local_name += c
-            receive_emails.add(local_name + domain)
-        return len(receive_emails)
+            unique_emails.add(local_name + domain)
+        return len(unique_emails)
 
 
 # 正規表現で実装
@@ -35,8 +35,8 @@ class Solution:
     def numUniqueEmails(self, emails: List[str]) -> int:
         receive_mails = set()
         for email in emails:
-            regex = re.match(r"([\w\.@]+)\+?.*@(.+)", email)
+            regex = re.match(r"^([\w\.]+)\+?.*@(.+)", email)
             local_name = regex.group(1).replace(".", "")
             domain = regex.group(2)
-            receive_mails.add(local_name + "@" + domain)
+            receive_mails.add(f"{local_name}@{domain}")
         return len(receive_mails)
