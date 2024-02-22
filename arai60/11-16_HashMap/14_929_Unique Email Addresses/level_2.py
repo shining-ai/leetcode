@@ -35,7 +35,7 @@ class Solution:
     def numUniqueEmails(self, emails: List[str]) -> int:
         unique_mails = set()
         for email in emails:
-            regex = re.match(r"^([\w\.]+)\+?.*@(.+)", email)
+            regex = re.match(r"([\w\.]+)\+?.*@(.+)", email)
             local_name = regex.group(1).replace(".", "")
             domain = regex.group(2)
             unique_mails.add(f"{local_name}@{domain}")
