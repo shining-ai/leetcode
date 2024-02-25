@@ -26,38 +26,20 @@ class Solution:
 
 
 # linkedhashmapを使った
-class LinkedHashMap:
-    def __init__(self):
-        self.d = collections.OrderedDict()
-
-    def put(self, key, index):
-        if key in self.d:
-            _ = self.d.pop(key)
-        self.d[key] = index
-
-    def pop(self, key):
-        if key in self.d:
-            index = self.d.pop(key)
-            return index
-
-    def pop_top(self):
-        if not self.d:
-            return -1
-        key, index = self.d.popitem(last=False)
-        return index
-
-
 class Solution:
     def firstUniqChar(self, s: str) -> int:
-        visited = set()
-        lhmap = LinkedHashMap()
+        seen = set()
+        unique = collections.OrderedDict()
         for i, c in enumerate(s):
-            if c in visited:
-                lhmap.pop(c)
+            if c in seen:
+                unique.pop(c, None)
                 continue
-            lhmap.put(c, i)
-            visited.add(c)
-        return lhmap.pop_top()
+            unique[c] = i
+            seen.add(c)
+        if not unique:
+            return -1
+        _, index = unique.popitem(last=False)
+        return index
 
 
 # linkedhashmapを使った
@@ -83,15 +65,13 @@ class LinkedHashMap:
         new_node.prev = self.tail.prev
         new_node.prev.next = new_node
         self.tail.prev = new_node
+        return new_node
 
     def remove_node(self, key):
-        node = self.head
-        while node:
-            if node.key == key:
-                break
-            node = node.next
-        if not node:
+        node_info = self.hashmap.pop(key, None)
+        if not node_info:
             return
+        node = node_info[1]
         prev_node = node.prev
         next_node = node.next
         prev_node.next = next_node
@@ -100,13 +80,13 @@ class LinkedHashMap:
     def put(self, key, value):
         if key in self.hashmap:
             self.remove_node(key)
-        self.hashmap[key] = value
-        self.__add_node(key)
+        node_address = self.__add_node(key)
+        self.hashmap[key] = (value, node_address)
 
     def pop(self):
         node = self.head.next
         if node.key:
-            index = self.hashmap[node.key]
+            index, _ = self.hashmap[node.key]
             return index
         return -1
 
@@ -114,11 +94,11 @@ class LinkedHashMap:
 class Solution:
     def firstUniqChar(self, s: str) -> int:
         visited = set()
-        lhmap = LinkedHashMap()
+        unique = LinkedHashMap()
         for i, c in enumerate(s):
             if c in visited:
-                lhmap.remove_node(c)
+                unique.remove_node(c)
                 continue
-            lhmap.put(c, i)
+            unique.put(c, i)
             visited.add(c)
-        return lhmap.pop()
+        return unique.pop()
