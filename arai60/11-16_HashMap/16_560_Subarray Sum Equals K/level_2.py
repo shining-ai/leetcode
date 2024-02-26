@@ -1,4 +1,5 @@
 # 総当たりで探索する
+# 1段目から変更なし
 class Solution:
     def subarraySum(self, nums: List[int], k: int) -> int:
         subarray_num = 0
@@ -12,6 +13,7 @@ class Solution:
 
 
 # 累積和を使って全探索する
+# 累積和の変数名を変更
 class Solution:
     def subarraySum(self, nums: List[int], k: int) -> int:
         num_sums = [0]
