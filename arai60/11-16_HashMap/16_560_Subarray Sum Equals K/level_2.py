@@ -16,9 +16,9 @@ class Solution:
 # 累積和の変数名を変更
 class Solution:
     def subarraySum(self, nums: List[int], k: int) -> int:
-        num_sums = [0]
+        num_sums = [0] * (len(nums) + 1)
         for i, num in enumerate(nums):
-            num_sums.append(num_sums[i] + num)
+            num_sums[i + 1] = num_sums[i] + num
         count = 0
         for i, start in enumerate(num_sums):
             for end in num_sums[i + 1 :]:
