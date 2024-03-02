@@ -69,7 +69,7 @@ class UnionFind:
         self.size = [1] * node_num
 
     def find_root(self, node):
-        while not is_root(self.parent[node]):
+        while not self.is_root(node):
             node = self.parent[node]
         return node
 
@@ -97,27 +97,23 @@ class Solution:
         uf = UnionFind(height * width)
         marking_grid = copy.deepcopy(grid)
 
-        def unite_next_tree(next_h, next_w, index):
-            if not ((0 <= next_h < height) and (0 <= next_w < width)):
-                return
-            if marking_grid[next_h][next_w] == "0":
-                return
-            next_index = width * next_h + next_w
-            uf.union_tree(index, next_index)
-
-        def meke_index(h, w):
-            return width * h + w
+        def unite_next_tree(h, w):
+            index = width * h + w
+            next_pos = [(h + 1, w), (h - 1, w), (h, w + 1), (h, w - 1)]
+            for next_h, next_w in next_pos:
+                if not ((0 <= next_h < height) and (0 <= next_w < width)):
+                    continue
+                if marking_grid[next_h][next_w] == "0":
+                    continue
+                next_index = width * next_h + next_w
+                uf.union_tree(index, next_index)
 
         for h in range(height):
             for w in range(width):
                 if marking_grid[h][w] == "0":
                     continue
                 marking_grid[h][w] = "0"
-                index = width * h + w
-                unite_next_tree(h + 1, w, index)
-                unite_next_tree(h - 1, w, index)
-                unite_next_tree(h, w + 1, index)
-                unite_next_tree(h, w - 1, index)
+                unite_next_tree(h, w)
         island_count = 0
         for h in range(height):
             for w in range(width):
