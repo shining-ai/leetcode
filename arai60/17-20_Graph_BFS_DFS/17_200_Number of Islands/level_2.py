@@ -97,15 +97,18 @@ class Solution:
         uf = UnionFind(height * width)
         marking_grid = copy.deepcopy(grid)
 
+        def make_index(h, w):
+            return width * h + w
+
         def unite_next_tree(h, w):
-            index = width * h + w
+            index = make_index(h, w)
             next_pos = [(h + 1, w), (h - 1, w), (h, w + 1), (h, w - 1)]
             for next_h, next_w in next_pos:
                 if not ((0 <= next_h < height) and (0 <= next_w < width)):
                     continue
                 if marking_grid[next_h][next_w] == "0":
                     continue
-                next_index = width * next_h + next_w
+                next_index = make_index(next_h, next_w)
                 uf.union_tree(index, next_index)
 
         for h in range(height):
@@ -117,7 +120,7 @@ class Solution:
         island_count = 0
         for h in range(height):
             for w in range(width):
-                index = width * h + w
+                index = make_index(h, w)
                 if grid[h][w] == "1" and uf.is_root(index):
                     island_count += 1
         return island_count
