@@ -1,17 +1,17 @@
 # 深さ優先探索
-# setではなく、grid_copyでチェック済みを管理するように修正
+# setではなく、marking_gridでチェック済みを管理するように修正
 class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
         height = len(grid)
         width = len(grid[0])
-        grid_copy = copy.deepcopy(grid)
+        marking_grid = copy.deepcopy(grid)
 
         def mark_connected_island(h, w):
-            if not (0 <= h < height) or not (0 <= w < width):
+            if not ((0 <= h < height) and (0 <= w < width)):
                 return
-            if grid_copy[h][w] == "0":
+            if marking_grid[h][w] == "0":
                 return
-            grid_copy[h][w] = "0"
+            marking_grid[h][w] = "0"
             mark_connected_island(h + 1, w)
             mark_connected_island(h - 1, w)
             mark_connected_island(h, w + 1)
@@ -20,7 +20,7 @@ class Solution:
         island_count = 0
         for h in range(height):
             for w in range(width):
-                if grid_copy[h][w] == "0":
+                if marking_grid[h][w] == "0":
                     continue
                 mark_connected_island(h, w)
                 island_count += 1
@@ -28,32 +28,32 @@ class Solution:
 
 
 # 幅優先探索
-# setではなく、grid_copyでチェック済みを管理するように修正
+# setではなく、marking_gridでチェック済みを管理するように修正
 class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
         height = len(grid)
         width = len(grid[0])
-        grid_copy = copy.deepcopy(grid)
-        queue = deque()
+        marking_grid = copy.deepcopy(grid)
+        queue_land = deque()
         island_count = 0
 
         def mark_connected_island(h, w):
-            queue.append((h, w))
-            while queue:
-                row, col = queue.popleft()
-                if not (0 <= row < height) or not (0 <= col < width):
+            queue_land.append((h, w))
+            while queue_land:
+                row, col = queue_land.popleft()
+                if not ((0 <= row < height) and (0 <= col < width)):
                     continue
-                if grid_copy[row][col] == "0":
+                if marking_grid[row][col] == "0":
                     continue
-                grid_copy[row][col] = "0"
-                queue.append((row + 1, col))
-                queue.append((row - 1, col))
-                queue.append((row, col + 1))
-                queue.append((row, col - 1))
+                marking_grid[row][col] = "0"
+                queue_land.append((row + 1, col))
+                queue_land.append((row - 1, col))
+                queue_land.append((row, col + 1))
+                queue_land.append((row, col - 1))
 
         for h in range(height):
             for w in range(width):
-                if grid_copy[h][w] == "0":
+                if marking_grid[h][w] == "0":
                     continue
                 island_count += 1
                 mark_connected_island(h, w)
@@ -62,18 +62,18 @@ class Solution:
 
 
 # UnionFind
-# grid_copyでチェック済みを管理して、unite_treeを呼ぶ回数を減らした
+# marking_gridでチェック済みを管理して、unite_treeを呼ぶ回数を減らした
 class UnionFind:
-    def __init__(self, n):
-        self.parent = [-1] * n
-        self.size = [1] * n
+    def __init__(self, node_num):
+        self.parent = [-1] * node_num
+        self.size = [1] * node_num
 
-    def find_root(self, x):
-        while self.parent[x] != -1:
-            x = self.parent[x]
-        return x
+    def find_root(self, node):
+        while not is_root(self.parent[node]):
+            node = self.parent[node]
+        return node
 
-    def unite_tree(self, node1, node2):
+    def union_tree(self, node1, node2):
         root1 = self.find_root(node1)
         root2 = self.find_root(node2)
         if root1 == root2:
@@ -95,26 +95,29 @@ class Solution:
         height = len(grid)
         width = len(grid[0])
         uf = UnionFind(height * width)
-        grid_copy = copy.deepcopy(grid)
+        marking_grid = copy.deepcopy(grid)
 
-        def neibor_unite_tree(neibor_h, neibor_w, index):
-            if not (0 <= neibor_h < height) or not (0 <= neibor_w < width):
+        def unite_next_tree(next_h, next_w, index):
+            if not ((0 <= next_h < height) and (0 <= next_w < width)):
                 return
-            if grid_copy[neibor_h][neibor_w] == "0":
+            if marking_grid[next_h][next_w] == "0":
                 return
-            neibor_index = width * neibor_h + neibor_w
-            uf.unite_tree(index, neibor_index)
+            next_index = width * next_h + next_w
+            uf.union_tree(index, next_index)
+
+        def meke_index(h, w):
+            return width * h + w
 
         for h in range(height):
             for w in range(width):
-                if grid_copy[h][w] == "0":
+                if marking_grid[h][w] == "0":
                     continue
-                grid_copy[h][w] = "0"
+                marking_grid[h][w] = "0"
                 index = width * h + w
-                neibor_unite_tree(h + 1, w, index)
-                neibor_unite_tree(h - 1, w, index)
-                neibor_unite_tree(h, w + 1, index)
-                neibor_unite_tree(h, w - 1, index)
+                unite_next_tree(h + 1, w, index)
+                unite_next_tree(h - 1, w, index)
+                unite_next_tree(h, w + 1, index)
+                unite_next_tree(h, w - 1, index)
         island_count = 0
         for h in range(height):
             for w in range(width):
