@@ -4,25 +4,25 @@ class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
         height = len(grid)
         width = len(grid[0])
-        mark_grid_as_visited = copy.deepcopy(grid)
+        seen_grid = copy.deepcopy(grid)
 
-        def mark_connected_island(h, w):
+        def mark_grid_as_visited(h, w):
             if not ((0 <= h < height) and (0 <= w < width)):
                 return
-            if mark_grid_as_visited[h][w] == "0":
+            if seen_grid[h][w] == "0":
                 return
-            mark_grid_as_visited[h][w] = "0"
-            mark_connected_island(h + 1, w)
-            mark_connected_island(h - 1, w)
-            mark_connected_island(h, w + 1)
-            mark_connected_island(h, w - 1)
+            seen_grid[h][w] = "0"
+            mark_grid_as_visited(h + 1, w)
+            mark_grid_as_visited(h - 1, w)
+            mark_grid_as_visited(h, w + 1)
+            mark_grid_as_visited(h, w - 1)
 
         island_count = 0
         for h in range(height):
             for w in range(width):
-                if mark_grid_as_visited[h][w] == "0":
+                if seen_grid[h][w] == "0":
                     continue
-                mark_connected_island(h, w)
+                mark_grid_as_visited(h, w)
                 island_count += 1
         return island_count
 
@@ -33,19 +33,19 @@ class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
         height = len(grid)
         width = len(grid[0])
-        mark_grid_as_visited = copy.deepcopy(grid)
+        seen_grid = copy.deepcopy(grid)
         queue_land = deque()
         island_count = 0
 
-        def mark_connected_island(h, w):
+        def mark_grid_as_visited(h, w):
             queue_land.append((h, w))
             while queue_land:
                 row, col = queue_land.popleft()
                 if not ((0 <= row < height) and (0 <= col < width)):
                     continue
-                if mark_grid_as_visited[row][col] == "0":
+                if seen_grid[row][col] == "0":
                     continue
-                mark_grid_as_visited[row][col] = "0"
+                seen_grid[row][col] = "0"
                 queue_land.append((row + 1, col))
                 queue_land.append((row - 1, col))
                 queue_land.append((row, col + 1))
@@ -53,10 +53,10 @@ class Solution:
 
         for h in range(height):
             for w in range(width):
-                if mark_grid_as_visited[h][w] == "0":
+                if seen_grid[h][w] == "0":
                     continue
                 island_count += 1
-                mark_connected_island(h, w)
+                mark_grid_as_visited(h, w)
 
         return island_count
 
@@ -95,7 +95,7 @@ class Solution:
         height = len(grid)
         width = len(grid[0])
         uf = UnionFind(height * width)
-        mark_grid_as_visited = copy.deepcopy(grid)
+        seen_grid = copy.deepcopy(grid)
 
         def make_index(h, w):
             return width * h + w
@@ -106,16 +106,16 @@ class Solution:
             for next_h, next_w in next_pos:
                 if not ((0 <= next_h < height) and (0 <= next_w < width)):
                     continue
-                if mark_grid_as_visited[next_h][next_w] == "0":
+                if seen_grid[next_h][next_w] == "0":
                     continue
                 next_index = make_index(next_h, next_w)
                 uf.union_tree(index, next_index)
 
         for h in range(height):
             for w in range(width):
-                if mark_grid_as_visited[h][w] == "0":
+                if seen_grid[h][w] == "0":
                     continue
-                mark_grid_as_visited[h][w] = "0"
+                seen_grid[h][w] = "0"
                 unite_next_tree(h, w)
         island_count = 0
         for h in range(height):
