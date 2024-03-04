@@ -68,6 +68,8 @@ class Solution:
 # UnionFind
 # 関数名を修正
 # 変数island_sizeを作成
+# 右と下方向だけ確認して結合するように修正
+# seenは不要のため削除
 class UnionFind:
     def __init__(self, node_num):
         self.parent = [-1] * node_num
@@ -99,20 +101,17 @@ class Solution:
         height = len(grid)
         width = len(grid[0])
         uf = UnionFind(height * width)
-        seen = set()
 
         def make_index(h, w):
             return h * width + w
 
         def unite_next_tree(h, w):
             index = make_index(h, w)
-            next_pos = [(h + 1, w), (h - 1, w), (h, w + 1), (h, w - 1)]
+            next_pos = [(h + 1, w), (h, w + 1)]
             for next_h, next_w in next_pos:
-                if not ((0 <= next_h < height) and (0 <= next_w < width)):
+                if not ((next_h < height) and (next_w < width)):
                     continue
                 if grid[next_h][next_w] == 0:
-                    continue
-                if (next_h, next_w) in seen:
                     continue
                 next_index = make_index(next_h, next_w)
                 uf.union_tree(index, next_index)
@@ -121,7 +120,6 @@ class Solution:
             for w in range(width):
                 if grid[h][w] == 0:
                     continue
-                seen.add((h, w))
                 unite_next_tree(h, w)
         max_island_size = 0
         for h in range(height):
