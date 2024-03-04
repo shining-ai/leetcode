@@ -80,11 +80,11 @@ class UnionFind:
             return
         # union by size：大きい木を親にすると計算量がO(logN)になる。
         if self.size[root1] < self.size[root2]:
-            self.parent[root1] = root2
-            self.size[root2] += self.size[root1]
+            smaller, bigger = root1, root2
         else:
-            self.parent[root2] = root1
-            self.size[root1] += self.size[root2]
+            smaller, bigger = root2, root1
+        self.parent[smaller] = bigger
+        self.size[bigger] += self.size[smaller]
 
     def is_root(self, node):
         return self.parent[node] == -1
