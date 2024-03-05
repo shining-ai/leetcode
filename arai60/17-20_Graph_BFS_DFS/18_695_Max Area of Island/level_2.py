@@ -6,19 +6,19 @@ class Solution:
         width = len(grid[0])
         seen = set()
 
-        def measure_unsurveyed_island_size(h, w):
-            if not ((0 <= h < height) and (0 <= w < width)):
+        def measure_unsurveyed_island_size(row, col):
+            if not ((0 <= row < len(grid)) and (0 <= col < len(grid[row]))):
                 return 0
-            if grid[h][w] == 0:
+            if grid[row][col] == 0:
                 return 0
-            if (h, w) in seen:
+            if (row, col) in seen:
                 return 0
-            seen.add((h, w))
+            seen.add((row, col))
             island_size = 1
-            island_size += measure_unsurveyed_island_size(h + 1, w)
-            island_size += measure_unsurveyed_island_size(h - 1, w)
-            island_size += measure_unsurveyed_island_size(h, w + 1)
-            island_size += measure_unsurveyed_island_size(h, w - 1)
+            island_size += measure_unsurveyed_island_size(row + 1, col)
+            island_size += measure_unsurveyed_island_size(row - 1, col)
+            island_size += measure_unsurveyed_island_size(row, col + 1)
+            island_size += measure_unsurveyed_island_size(row, col - 1)
             return island_size
 
         max_island_size = 0
@@ -43,7 +43,9 @@ class Solution:
             island_size = 0
             while queue_island:
                 row, col = queue_island.popleft()
-                if not ((0 <= row < height) and (0 <= col < width)):
+                if not (
+                    (0 <= row < len(grid)) and (0 <= col < len(grid[row]))
+                ):
                     continue
                 if grid[row][col] == 0:
                     continue
@@ -102,18 +104,20 @@ class Solution:
         width = len(grid[0])
         uf = UnionFind(height * width)
 
-        def make_index(h, w):
-            return h * width + w
+        def make_index(row, col):
+            return row * width + col
 
-        def unite_next_tree(h, w):
-            index = make_index(h, w)
-            next_pos = [(h + 1, w), (h, w + 1)]
-            for next_h, next_w in next_pos:
-                if not ((next_h < height) and (next_w < width)):
+        def unite_next_tree(row, col):
+            index = make_index(row, col)
+            next_pos = [(row + 1, col), (row, col + 1)]
+            for next_row, next_col in next_pos:
+                if not (
+                    (next_row < len(grid)) and (next_col < len(grid[next_row]))
+                ):
                     continue
-                if grid[next_h][next_w] == 0:
+                if grid[next_row][next_col] == 0:
                     continue
-                next_index = make_index(next_h, next_w)
+                next_index = make_index(next_row, next_col)
                 uf.union_tree(index, next_index)
 
         for h in range(height):
