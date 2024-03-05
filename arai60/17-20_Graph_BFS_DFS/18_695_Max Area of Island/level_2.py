@@ -7,7 +7,7 @@ class Solution:
         seen = set()
 
         def measure_unsurveyed_island_size(row, col):
-            if not ((0 <= row < len(grid)) and (0 <= col < len(grid[row]))):
+            if not (0 <= row < len(grid) and 0 <= col < len(grid[row])):
                 return 0
             if grid[row][col] == 0:
                 return 0
@@ -43,9 +43,7 @@ class Solution:
             island_size = 0
             while queue_island:
                 row, col = queue_island.popleft()
-                if not (
-                    (0 <= row < len(grid)) and (0 <= col < len(grid[row]))
-                ):
+                if not (0 <= row < len(grid) and 0 <= col < len(grid[row])):
                     continue
                 if grid[row][col] == 0:
                     continue
@@ -112,7 +110,7 @@ class Solution:
             next_pos = [(row + 1, col), (row, col + 1)]
             for next_row, next_col in next_pos:
                 if not (
-                    (next_row < len(grid)) and (next_col < len(grid[next_row]))
+                    next_row < len(grid) and next_col < len(grid[next_row])
                 ):
                     continue
                 if grid[next_row][next_col] == 0:
