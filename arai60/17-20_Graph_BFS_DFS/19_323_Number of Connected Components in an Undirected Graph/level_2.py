@@ -41,17 +41,17 @@ class Solution:
 # DFS
 class Solution:
     def countComponents(self, n: int, edges: List[List[int]]) -> int:
-        graph = [set() for node_id in range(n)]
+        adjacency_list = [set() for node_id in range(n)]
         for node1, node2 in edges:
-            graph[node1].add(node2)
-            graph[node2].add(node1)
+            adjacency_list[node1].add(node2)
+            adjacency_list[node2].add(node1)
         seen = set()
 
         def mark_connected_node(node_id):
             if node_id in seen:
                 return
             seen.add(node_id)
-            next_nodes = graph[node_id]
+            next_nodes = adjacency_list[node_id]
             for next_node in next_nodes:
                 mark_connected_node(next_node)
 
@@ -68,17 +68,17 @@ class Solution:
 # キューからスタックに変更
 class Solution:
     def countComponents(self, n: int, edges: List[List[int]]) -> int:
-        graph = [set() for node_id in range(n)]
+        adjacency_list = [set() for node_id in range(n)]
         for node1, node2 in edges:
-            graph[node1].add(node2)
-            graph[node2].add(node1)
+            adjacency_list[node1].add(node2)
+            adjacency_list[node2].add(node1)
 
         def mark_connected_node(start_node):
             stack = [start_node]
             while stack:
                 node_id = stack.pop()
                 seen.add(node_id)
-                next_nodes = graph[node_id]
+                next_nodes = adjacency_list[node_id]
                 for next_node in next_nodes:
                     if next_node in seen:
                         continue
