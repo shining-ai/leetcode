@@ -5,13 +5,13 @@ class UnionFind:
         self.parent = [-1] * node_num
         self.size = [1] * node_num
 
-    def is_root(self, node):
-        return self.parent[node] == -1
+    def is_root(self, node_id):
+        return self.parent[node_id] == -1
 
-    def find_root(self, node):
-        while not self.is_root(node):
-            node = self.parent[node]
-        return node
+    def find_root(self, node_id):
+        while not self.is_root(node_id):
+            node_id = self.parent[node_id]
+        return node_id
 
     def union_tree(self, node1, node2):
         root1 = self.find_root(node1)
@@ -41,26 +41,26 @@ class Solution:
 # DFS
 class Solution:
     def countComponents(self, n: int, edges: List[List[int]]) -> int:
-        graph = [set() for node in range(n)]
+        graph = [set() for node_id in range(n)]
         for node1, node2 in edges:
             graph[node1].add(node2)
             graph[node2].add(node1)
         seen = set()
 
-        def mark_connected_node(node):
-            if node in seen:
+        def mark_connected_node(node_id):
+            if node_id in seen:
                 return
-            seen.add(node)
-            next_nodes = graph[node]
+            seen.add(node_id)
+            next_nodes = graph[node_id]
             for next_node in next_nodes:
                 mark_connected_node(next_node)
 
         count = 0
-        for node in range(n):
-            if node in seen:
+        for node_id in range(n):
+            if node_id in seen:
                 continue
             count += 1
-            mark_connected_node(node)
+            mark_connected_node(node_id)
         return count
 
 
@@ -68,7 +68,7 @@ class Solution:
 # キューからスタックに変更
 class Solution:
     def countComponents(self, n: int, edges: List[List[int]]) -> int:
-        graph = [set() for node in range(n)]
+        graph = [set() for node_id in range(n)]
         for node1, node2 in edges:
             graph[node1].add(node2)
             graph[node2].add(node1)
@@ -76,9 +76,9 @@ class Solution:
         def mark_connected_node(start_node):
             stack = [start_node]
             while stack:
-                node = stack.pop()
-                seen.add(node)
-                next_nodes = graph[node]
+                node_id = stack.pop()
+                seen.add(node_id)
+                next_nodes = graph[node_id]
                 for next_node in next_nodes:
                     if next_node in seen:
                         continue
