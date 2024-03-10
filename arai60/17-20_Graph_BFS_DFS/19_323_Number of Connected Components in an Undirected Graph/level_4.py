@@ -4,17 +4,17 @@ class UnionFind:
         self.parent = [-1] * node_num
         self.size = [1] * node_num
 
-    def is_root(self, node_id):
-        return self.parent[node_id] == -1
+    def is_root(self, node):
+        return self.parent[node] == -1
 
-    def find_root(self, node_id):
-        root = node_id
+    def find_root(self, node):
+        root = node
         while not self.is_root(root):
             root = self.parent[root]
-        while not self.is_root(node_id):
-            temp = node_id
-            node_id = self.parent[node_id]
-            self.parent[temp] = root
+        while not self.is_root(node):
+            parent = self.parent[node]
+            self.parent[node] = root
+            node = parent
         return root
 
     def union_tree(self, node1, node2):
@@ -48,14 +48,14 @@ class UnionFind:
         self.parent = [-1] * node_num
         self.size = [1] * node_num
 
-    def is_root(self, node_id):
-        return self.parent[node_id] == -1
+    def is_root(self, node):
+        return self.parent[node] == -1
 
-    def find_root(self, node_id):
-        if self.is_root(node_id):
-            return node_id
-        root = self.find_root(self.parent[node_id])
-        self.parent[node_id] = root
+    def find_root(self, node):
+        if self.is_root(node):
+            return node
+        root = self.find_root(self.parent[node])
+        self.parent[node] = root
         return root
 
     def union_tree(self, node1, node2):
