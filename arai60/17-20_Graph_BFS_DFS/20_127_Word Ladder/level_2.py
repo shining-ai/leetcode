@@ -55,15 +55,19 @@ class Solution:
                 keys.append(f"{word[:i]}_{word[i + 1 :]}")
             return keys
 
-        # 1文字異なる単語のペアを辞書に格納
-        # 例: {"_ot": ["hot", "dot", "lot"]}
-        word_patterns = defaultdict(list)
-        for word in wordList:
-            keys = get_keys(word)
-            for key in keys:
-                word_patterns[key].append(word)
+        def build_word_patterns(wordList):
+            # 1文字異なる単語のペアを辞書に格納
+            # 例: {"_ot": ["hot", "dot", "lot"]}
+            word_patterns = defaultdict(list)
+            for word in wordList:
+                keys = get_keys(word)
+                for key in keys:
+                    word_patterns[key].append(word)
+            return word_patterns
+
         # BFSで最短経路を探索
-        seen = set([beginWords])
+        word_patterns = build_word_patterns(wordList)
+        seen = set([beginWord])
         word_step_queue = deque([(beginWord, 1)])
         while word_step_queue:
             word, step = word_step_queue.popleft()
@@ -93,13 +97,15 @@ class Solution:
                 keys.append(f"{word[:i]}_{word[i + 1 :]}")
             return keys
 
-        # 1文字異なる単語のペアを辞書に格納
-        # 例: {"_ot": ["hot", "dot", "lot"]}
-        word_patterns = defaultdict(list)
-        for word in wordList:
-            keys = get_keys(word)
-            for key in keys:
-                word_patterns[key].append(word)
+        def build_word_patterns(wordList):
+            # 1文字異なる単語のペアを辞書に格納
+            # 例: {"_ot": ["hot", "dot", "lot"]}
+            word_patterns = defaultdict(list)
+            for word in wordList:
+                keys = get_keys(word)
+                for key in keys:
+                    word_patterns[key].append(word)
+            return word_patterns
 
         def visit_word(queue, seen, others_seen):
             queue_size = len(queue)
@@ -116,6 +122,7 @@ class Solution:
                         queue.append(next_word)
             return False
 
+        word_patterns = build_word_patterns(wordList)
         begin_seen = set([beginWord])
         end_seen = set([endWord])
         begin_queue = deque([beginWord])
