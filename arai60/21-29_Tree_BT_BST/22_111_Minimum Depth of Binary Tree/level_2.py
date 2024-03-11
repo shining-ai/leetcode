@@ -7,13 +7,11 @@ class Solution:
         while node_depth_queue:
             node, depth = node_depth_queue.popleft()
             if not node.left and not node.right:
-                break
+                return depth + 1
             if node.left:
                 node_depth_queue.append((node.left, depth + 1))
             if node.right:
                 node_depth_queue.append((node.right, depth + 1))
-        min_node_num = depth + 1
-        return min_node_num
 
 
 # DFS
@@ -21,20 +19,16 @@ class Solution:
 # min_depthの初期値をintの最大値に変更
 class Solution:
     def minDepth(self, root: Optional[TreeNode]) -> int:
-        def search_min_depth(node):
-            if not node.left and not node.right:
-                return 0
-            min_depth = sys.maxsize
-            if node.left:
-                min_depth = min(min_depth, search_min_depth(node.left) + 1)
-            if node.right:
-                min_depth = min(min_depth, search_min_depth(node.right) + 1)
-            return min_depth
-
         if not root:
             return 0
-        min_node_num = search_min_depth(root) + 1
-        return min_node_num
+        if not root.left and not root.right:
+            return 1
+        min_depth = sys.maxsize
+        if root.left:
+            min_depth = min(min_depth, self.minDepth(root.left) + 1)
+        if root.right:
+            min_depth = min(min_depth, self.minDepth(root.right) + 1)
+        return min_depth
 
 
 # DFSをstackで実装
@@ -54,5 +48,4 @@ class Solution:
                 node_depth_stack.append((node.right, depth + 1))
             if node.left:
                 node_depth_stack.append((node.left, depth + 1))
-        min_node_num = min_depth + 1
-        return min_node_num
+        return min_depth + 1
