@@ -21,19 +21,24 @@ class Solution:
         self, root1: Optional[TreeNode], root2: Optional[TreeNode]
     ) -> Optional[TreeNode]:
 
-        def merge_nodes(node1, node2, queue):
-            if node1 and node2:
-                node1.val += node2.val
-                queue.append((node1, node2))
+        def merge_nodes(node1, node2):
+            if not node2:
+                return deepcopy(node1)
             if not node1:
-                node1 = node2
-            return node1, queue
+                return deepcopy(node2)
+            new_node = TreeNode(node1.val + node2.val)
+            return new_node
 
+        merged_root = merge_nodes(root1, root2)
         nodes_queue = deque()
-        root1_clone = deepcopy(root1)
-        root1_clone, nodes_queue = merge_nodes(root1_clone, root2, nodes_queue)
+        if root1 and root2:
+            nodes_queue.append((merged_root, root1, root2))
         while nodes_queue:
-            node1, node2 = nodes_queue.popleft()
-            node1.left, nodes_queue = merge_nodes(node1.left, node2.left, nodes_queue)
-            node1.right, nodes_queue = merge_nodes(node1.right, node2.right, nodes_queue)
-        return root1_clone
+            merged_node, node1, node2 = nodes_queue.popleft()
+            merged_node.left = merge_nodes(node1.left, node2.left)
+            merged_node.right = merge_nodes(node1.right, node2.right)
+            if node1.left and node2.left:
+                nodes_queue.append((merged_node.left, node1.left, node2.left))
+            if node1.right and node2.right:
+                nodes_queue.append((merged_node.right, node1.right, node2.right))
+        return merged_root
