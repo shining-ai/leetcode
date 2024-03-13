@@ -35,7 +35,6 @@ class Solution:
             if not node1.left:
                 node1.left = node2.left
             if node1.right and node2.right:
-                assert node1.right and node2.right
                 node1.right.val += node2.right.val
                 nodes_queue.append((node1.right, node2.right))
             if not node1.right:
