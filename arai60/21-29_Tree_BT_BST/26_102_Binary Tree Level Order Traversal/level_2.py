@@ -8,15 +8,15 @@ class Solution:
         level_order = []
         while node_queue:
             num_nodes_in_level = len(node_queue)
-            nodes_level = []
+            nodes_in_level = []
             for _ in range(num_nodes_in_level):
                 node = node_queue.popleft()
-                nodes_level.append(node.val)
+                nodes_in_level.append(node.val)
                 if node.left:
                     node_queue.append(node.left)
                 if node.right:
                     node_queue.append(node.right)
-            level_order.append(nodes_level)
+            level_order.append(nodes_in_level)
         return level_order
 
 
