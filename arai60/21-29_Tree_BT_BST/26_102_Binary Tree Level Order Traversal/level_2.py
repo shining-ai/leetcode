@@ -7,16 +7,16 @@ class Solution:
         node_queue = deque([root])
         level_order = []
         while node_queue:
-            queue_length = len(node_queue)
-            level_nodes = []
-            for _ in range(queue_length):
+            num_nodes_in_level = len(node_queue)
+            nodes_level = []
+            for _ in range(num_nodes_in_level):
                 node = node_queue.popleft()
-                level_nodes.append(node.val)
+                nodes_level.append(node.val)
                 if node.left:
                     node_queue.append(node.left)
                 if node.right:
                     node_queue.append(node.right)
-            level_order.append(level_nodes)
+            level_order.append(nodes_level)
         return level_order
 
 
@@ -28,7 +28,7 @@ class Solution:
         level_order = []
 
         def build_level_order(node, level):
-            if len(level_order) - 1 < level:
+            while len(level_order) - 1 < level:
                 level_order.append([])
             level_order[level].append(node.val)
             if node.left:
