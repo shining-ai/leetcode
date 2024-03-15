@@ -32,9 +32,9 @@ class Solution:
                 level_order.append([])
             level_order[level].append(node.val)
             if node.left:
-                helper(node.left, level + 1)
+                build_level_order(node.left, level + 1)
             if node.right:
-                helper(node.right, level + 1)
+                build_level_order(node.right, level + 1)
 
-        helper(root, 0)
+        build_level_order(root, 0)
         return level_order
