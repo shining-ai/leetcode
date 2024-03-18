@@ -7,15 +7,15 @@ class Solution:
         level_order = []
         current_queue = deque([root])
         while current_queue:
-            nodes_in_level = []
+            values_in_level = []
             next_queue = deque()
             while current_queue:
                 node = current_queue.popleft()
-                nodes_in_level.append(node.val)
+                values_in_level.append(node.val)
                 if node.left:
                     next_queue.append(node.left)
                 if node.right:
                     next_queue.append(node.right)
-            level_order.append(nodes_in_level)
+            level_order.append(values_in_level)
             current_queue = next_queue
         return level_order
