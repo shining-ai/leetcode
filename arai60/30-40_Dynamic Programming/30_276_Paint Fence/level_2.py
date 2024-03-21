@@ -12,7 +12,7 @@ class Solution:
             same_as_previous = (k - 1) * num_way[i - 2]
             different_from_previous = (k - 1) * num_way[i - 1]
             num_way[i] = same_as_previous + different_from_previous
-        return num_way[-1]
+        return num_way[n]
 
 
 # 1つ前と2つ前のパターンだけ記憶しておく
