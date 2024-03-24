@@ -96,6 +96,7 @@ class BIT:
             index += index & -index
 
     def query(self, index):
+        # 開区間[0, index] の範囲の最大値を返す
         max_value = 0
         while 0 < index:
             max_value = max(self.bit[index], max_value)
