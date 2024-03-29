@@ -44,8 +44,8 @@ class Solution:
                     continue
                 if obstacleGrid[row][column] == 1:
                     continue
-                if 0 <= row - 1 < height:
+                if 0 <= row - 1:
                     num_paths[row][column] += num_paths[row - 1][column]
-                if 0 <= column - 1 < width:
+                if 0 <= column - 1:
                     num_paths[row][column] += num_paths[row][column - 1]
         return num_paths[-1][-1]
