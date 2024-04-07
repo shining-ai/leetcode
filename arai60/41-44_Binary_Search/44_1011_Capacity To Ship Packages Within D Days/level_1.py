@@ -2,7 +2,7 @@
 # 運べるかどうかを試して、capacityを2分探索する
 class Solution:
     def shipWithinDays(self, weights: List[int], days: int) -> int:
-        def can_shipp(capacity):
+        def can_ship(capacity):
             needed_day = 1
             current_loaded = 0
             for weight in weights:
@@ -22,7 +22,7 @@ class Solution:
 
         while left < right:
             middle = (left + right) // 2
-            if can_shipp(middle):
+            if can_ship(middle):
                 right = middle
             else:
                 left = middle + 1
