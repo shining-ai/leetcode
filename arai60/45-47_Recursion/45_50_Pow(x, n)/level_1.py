@@ -1,3 +1,4 @@
+# pythonの演算子を使用
 class Solution:
     def myPow(self, x: float, n: int) -> float:
         return x**n
@@ -6,29 +7,26 @@ class Solution:
 # 単純なブルートフォース(TLE)
 class Solution:
     def myPow(self, x: float, n: int) -> float:
-        ans = 1
-        if n > 0:
-            for i in range(n):
-                ans *= x
-            return ans
-        else:
-            for i in range(-n):
-                ans /= x
-            return ans
+        power_result = 1
+        if 0 < n:
+            for _ in range(n):
+                power_result *= x
+        if n < 0:
+            for _ in range(-n):
+                power_result /= x
+        return power_result
 
-# 解答を見た
+
+# Binary Exponentiation
 class Solution:
     def myPow(self, x: float, n: int) -> float:
-        def binary_exp(x, n):
+        def calculate_power(x, n):
             if n == 0:
                 return 1
             if n % 2 == 1:
-                return x * binary_exp(x * x, (n - 1) // 2)
-            assert n % 2 == 0
-            return binary_exp(x * x, n // 2)
+                return x * calculate_power(x * x, (n - 1) // 2)
+            return calculate_power(x * x, n // 2)
 
         if n < 0:
-            ans = 1 / binary_exp(x, -n)
-        else:
-            ans = binary_exp(x, n)
-        return ans
+            return 1 / calculate_power(x, -n)
+        return calculate_power(x, n)
