@@ -3,10 +3,10 @@ class Solution:
         min_length = math.inf
         left = 0
         current_sum = 0
-        for right in range(len(nums)):
-            current_sum += nums[right]
+        for right in range(1, len(nums) + 1):
+            current_sum += nums[right - 1]
             while target <= current_sum:
-                min_length = min(min_length, right - left + 1)
+                min_length = min(min_length, right - left)
                 current_sum -= nums[left]
                 left += 1
         if min_length == math.inf:
