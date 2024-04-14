@@ -16,10 +16,10 @@ class Solution:
             else:
                 return False
 
-            right_num = math.inf
+            min_right_num = math.inf
             for i in range(left + 1, len(nums)):
-                if nums[left] < nums[i] < right_num:
-                    right_num = nums[i]
+                if nums[left] < nums[i] < min_right_num:
+                    min_right_num = nums[i]
                     right = i
             nums[left], nums[right] = nums[right], nums[left]
             nums[left + 1 :] = sorted(nums[left + 1 :])
