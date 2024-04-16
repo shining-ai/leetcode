@@ -4,7 +4,7 @@ class Solution:
         subsets = []
         for i in range(len(nums) + 1):
             subsets.extend(itertools.combinations(nums, i))
-        [list(subset) for subset in subsets]
+        return [list(subset) for subset in subsets]
 
 
 # Backtracking
