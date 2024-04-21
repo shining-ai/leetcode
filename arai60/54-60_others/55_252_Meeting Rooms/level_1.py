@@ -1,13 +1,13 @@
 # 予定のある時間を全て記憶していく
 class Solution:
     def canAttendMeetings(self, intervals: List[List[int]]) -> bool:
-        schejuled = set()
+        scheduled = set()
         for interval in intervals:
             start, end = interval[0], interval[1]
             for i in range(start, end):
-                if i in schejuled:
+                if i in scheduled:
                     return False
-                schejuled.add(i)
+                scheduled.add(i)
         return True
 
 
