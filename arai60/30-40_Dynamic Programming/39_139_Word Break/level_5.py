@@ -35,8 +35,10 @@ class Solution:
 # s = "aaaaaaa" wordDict = ["aaaa","aaa"]の場合、正規表現は"(aaa|aaaa)*"となり、"aaaaaaa"にマッチしない
 class Solution:
     def wordBreak(self, s: str, wordDict: List[str]) -> bool:
-        pattern = "("
+        pattern = ["("]
         for word in sorted(wordDict):
-            pattern += re.escape(word) + "|"
-        pattern = pattern[:-1] + ")*"
-        return re.match(pattern, s).span() == (0, len(s))
+            pattern.append(re.escape(word))
+            pattern.append("|")
+        pattern.pop()
+        pattern.append(")*")
+        return re.match("".join(pattern), s).span() == (0, len(s))
