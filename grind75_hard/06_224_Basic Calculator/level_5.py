@@ -3,18 +3,12 @@ class Solution:
     def calculate(self, s: str) -> int:
         index = 0
 
-        def skip_spaces():
-            nonlocal index
-            index += 1
-            while index < len(s) and s[index].isspace():
-                index += 1
-
         def expr():
             nonlocal index
             result = factor()
             while index < len(s) and s[index] in "+-":
                 op = s[index]
-                skip_spaces()
+                index += 1
                 if op == "+":
                     result += factor()
                 else:
@@ -25,15 +19,14 @@ class Solution:
             nonlocal index
             result = 0
             if index < len(s) and s[index] == "(":
-                skip_spaces()
+                index += 1
                 result = expr()
-                skip_spaces()  # ")"を読み飛ばす
+                index += 1  # ")"を読み飛ばす
                 return result
             while index < len(s) and s[index].isdigit():
                 result = 10 * result + int(s[index])
-                skip_spaces()
+                index += 1
             return result
 
-        if index < len(s) and s[0].isspace():
-            skip_spaces()
+        s = s.replace(" ", "")
         return expr()
