@@ -7,21 +7,20 @@ class Solution:
     def addTwoNumbers(
         self, l1: Optional[ListNode], l2: Optional[ListNode]
     ) -> Optional[ListNode]:
-        sentinel = ListNode(0)
-        current = sentinel
+        sentinel = ListNode()
+        node = sentinel
         carry = 0
         while l1 or l2 or carry:
-            v1 = 0
+            digit = carry
             if l1:
-                v1 = l1.val
+                digit += l1.val
                 l1 = l1.next
-            v2 = 0
             if l2:
-                v2 = l2.val
+                digit += l2.val
                 l2 = l2.next
-            current_val = v1 + v2 + carry
-            carry = current_val // 10
-            current_digit = current_val % 10
-            current.next = ListNode(current_digit)
-            current = current.next
+            carry = digit // 10
+            digit = digit % 10
+            node.next = ListNode(digit)
+            node = node.next
+
         return sentinel.next
