@@ -9,7 +9,7 @@ class Solution:
         return intersection
 
 
-# 1段目から特に変更なし
+# setに&えn演算子を使う方法
 class Solution:
     def intersection(self, nums1: List[int], nums2: List[int]) -> List[int]:
         nums1_set = set(nums1)
@@ -41,3 +41,18 @@ class Solution:
             while j < len(nums2) and nums2_sorted[j] == latest_intersection:
                 j += 1
         return intersection
+
+
+# 辞書を使う方法
+class Solution:
+    def intersection(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        seen = defaultdict(bool)
+        for num1 in nums1:
+            seen[num1] = True
+
+        intersections = []
+        for num2 in nums2:
+            if seen[num2]:
+                intersections.append(num2)
+                seen[num2] = False
+        return intersections
