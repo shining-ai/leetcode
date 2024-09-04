@@ -9,9 +9,9 @@ class Solution:
                 fix = fix.next
                 head = head.next
                 continue
-            while head.next and head.val == head.next.val:
+            val = head.val
+            while head and head.val == val:
                 head = head.next
-            head = head.next
             fix.next = head
         return sentinel.next
 
