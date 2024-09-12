@@ -14,20 +14,19 @@ class Solution:
 # 先頭と末尾が返ってくれば、作業ができると考える
 class Solution:
     def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
-
         def helper(node):
             if not node:
                 return None, None
             if not node.next:
                 return node, node
             head, tail = helper(node.next)
+            node.next = None
             tail.next = node
             tail = tail.next
-            tail.next = None
             return head, tail
 
-        reverse_list, _ = helper(head)
-        return reverse_list
+        reversed_list, _ = helper(head)
+        return reversed_list
 
 
 # 再帰
