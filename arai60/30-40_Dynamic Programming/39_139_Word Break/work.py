@@ -9,10 +9,10 @@ class Solution:
                 continue
             seen.add(start_index)
             for word in wordDict:
-                end_index = start_index + len(word)
-                if s[start_index:end_index] != word:
+                next_start = start_index + len(word)
+                if s[start_index:next_start] != word:
                     continue
-                if end_index == len(s):
+                if next_start == len(s):
                     return True
-                stack.append(end_index)
+                stack.append(next_start)
         return False
