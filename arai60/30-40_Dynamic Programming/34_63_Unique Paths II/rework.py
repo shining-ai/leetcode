@@ -27,8 +27,6 @@ class Solution:
         height = len(obstacleGrid)
         width = len(obstacleGrid[0])
         patterns = [[0] * width for _ in range(height)]
-        if obstacleGrid[0][0] == 1:
-            return 0
         patterns[0][0] = 1
         for row in range(height):
             for col in range(width):
